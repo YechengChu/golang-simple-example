@@ -19,7 +19,6 @@ type Rectangle struct {
 	length, width float32
 }
 
-// Rectangle has Area() function so can be a Shaper
 func (r Rectangle) Area() float32 {
 	return r.length * r.width
 } // Area
