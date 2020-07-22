@@ -22,10 +22,19 @@ type MoreShaper interface {
 	Perimeter() float32
 }
 
+type Animal interface {
+	Bark()
+}
+
+type Dog struct{
+	weight float32
+}
+
 func main() {
 	var areaIntf Shaper = &Square{5}
 	var aSquare = Square{4}
 	var areaIntf2 Shaper = &Circle{2}
+	var anAnimal Animal = Dog{21}
 	fmt.Println("--------断言类型是一个具体类型--------")
 	// Is Square the type of areaIntf ?
 	if t, ok := areaIntf.(*Square); ok {
@@ -63,18 +72,49 @@ func main() {
 	} // if
 	fmt.Println("--------switch--------")
 	// testing with switch:
-	switch t := areaIntf.(type) {
+	switchType(areaIntf)
+	switchType(anAnimal)
+	switchInterface((Shaper)(&aSquare))
+	switchInterface(anAnimal)
+} // main
+
+func switchType(x interface{}) {
+	switch t := x.(type) {
 	case *Square:
 		fmt.Printf("Type Square %T with value %v\n", t, t)
 	case *Circle:
 		fmt.Printf("Type Circle %T with value %v\n", t, t)
+	case Dog:
+		fmt.Printf("Type Dog %T with value %v\n", t, t)
 	default:
 		fmt.Printf("Unexpected type %T", t)
 	} // switch
-} // main
+} // switchType
+
+func switchInterface(x interface{}) {
+	switch u := x.(type) {
+	case MoreShaper:
+		fmt.Printf("A MoreShaper type with value %v\n", u)
+	case Shaper:
+		fmt.Printf("A shaper interface with value %v\n", u)
+	default:
+		fmt.Printf("Unexpected interface with value %v\n", u)
+	} // switch
+} // switchInterface
 
 func (sq *Square) Area() float32 {
 	return sq.side * sq.side
+} // Area
+
+func (d Dog) Bark() {
+	switch {
+  case d.weight < 10:
+		fmt.Println("woof-woof")
+	case 10 <= d.weight && d.weight < 20:
+		fmt.Println("ruff-ruff")
+	default:
+		fmt.Println("bow-wow")
+	} // switch
 } // Area
 
 func (sq *Square) Perimeter() float32 {
