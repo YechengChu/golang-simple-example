@@ -11,3 +11,5 @@
 > - https://github.com/ruilisi/golang-examples
 >
 > NOTE: Some of the code are directly from those above sources
+
+My note for Golang study can be downloaded [here](https://github.com/YechengChu/golang-simple-example/raw/master/Golang%20学习笔记.pdf)
